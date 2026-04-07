@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autana — Tu negocio reserva solo mientras duermes</title>
+  <meta name="description" content="Agencia de conversión digital para negocios de servicios en España. Web que convierte + bot de WhatsApp con IA real + automatizaciones.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Reset ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #F9F8F5;
+      color: #0F1A14;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ─── Variables ───────────────────────────────── */
+    :root {
+      --bg: #F9F8F5;
+      --surface: #FFFFFF;
+      --accent: #1B5E42;
+      --accent-dark: #0D3320;
+      --accent-mid: #2D7A56;
+      --accent-tint: #E8F5EE;
+      --text: #0F1A14;
+      --muted: #6B7280;
+      --subtle: #9CA3AF;
+      --border: #E5E7EB;
+      --border-strong: #D1D5DB;
+      --max-w: 1200px;
+      --r-sm: 6px;
+      --r-md: 10px;
+      --r-lg: 16px;
+      --r-full: 9999px;
+    }
+
+    /* ─── Shared ──────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.25rem; }
+    @media (min-width: 768px) { .container { padding: 0 2rem; } }
+
+    .section-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.625rem;
+      display: block;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.875rem;
+    }
+    @media (min-width: 768px) {
+      .section-title { font-size: 2.5rem; }
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    @media (min-width: 768px) {
+      .section-sub { font-size: 1.0625rem; }
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--r-full);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 150ms ease, transform 100ms ease;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--r-full);
+      border: 1.5px solid var(--border-strong);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 150ms ease, background 150ms ease;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: var(--accent-tint); }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(249,248,245,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) { .nav-inner { padding: 0 2rem; height: 60px; } }
+    .nav-logo {
+      font-size: 1.0625rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .nav-logo-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; }
+    .nav-links { display: none; list-style: none; align-items: center; gap: 1.75rem; }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 150ms ease; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── HERO ────────────────────────────────────── */
+    .hero { padding: 3.5rem 0 3rem; overflow: hidden; }
+    @media (min-width: 768px) { .hero { padding: 5rem 0 4rem; } }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr 420px;
+        gap: 4rem;
+      }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-tint);
+      color: var(--accent);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3125rem 0.75rem;
+      border-radius: var(--r-full);
+      margin-bottom: 1.25rem;
+    }
+    .hero-badge-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.75)} }
+
+    .hero h1 {
+      font-size: clamp(2.25rem, 6vw, 3.75rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      max-width: 46ch;
+    }
+    @media (min-width: 768px) { .hero-sub { font-size: 1.0625rem; } }
+
+    .hero-ctas { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .btn-hero { font-size: 0.9375rem; padding: 0.75rem 1.625rem; }
+
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+    }
+    .hero-proof-item {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .proof-check { color: var(--accent); font-weight: 700; }
+    .proof-sep { width: 1px; height: 14px; background: var(--border); }
+
+    /* Hero visual card */
+    .hero-visual-col { position: relative; }
+    .hero-card-main {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      box-shadow: 0 16px 48px rgba(15,26,20,0.08), 0 2px 8px rgba(15,26,20,0.04);
+      position: relative;
+    }
+    .hero-card-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .hero-card-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+      margin-bottom: 1.25rem;
+    }
+    .hero-stat {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 0.875rem 1rem;
+    }
+    .hero-stat.green {
+      background: var(--accent-tint);
+      border-color: rgba(27,94,66,0.2);
+    }
+    .hero-stat-num {
+      font-size: 1.625rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .hero-stat.green .hero-stat-num { color: var(--accent); }
+    .hero-stat-label { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+    .hero-card-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .hero-card-row-label { color: var(--muted); font-weight: 500; }
+    .hero-card-row-val { font-weight: 700; color: var(--text); }
+    .hero-card-row-val.up { color: var(--accent); }
+    /* Floating notification */
+    .hero-notif {
+      position: absolute;
+      bottom: -1rem;
+      right: -1rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--r-md);
+      padding: 0.625rem 0.875rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 8px 24px rgba(27,94,66,0.3);
+      white-space: nowrap;
+    }
+    .notif-dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; opacity: 0.9; }
+    @media (max-width: 899px) {
+      .hero-card-main { max-width: 480px; }
+      .hero-notif { right: 0; }
+    }
+
+    /* ─── PARA QUIÉN (strip) ──────────────────────── */
+    .para-quien {
+      padding: 1.5rem 0 2.5rem;
+    }
+    .para-quien-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 0.875rem;
+    }
+    .para-quien-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .pq-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-full);
+      padding: 0.375rem 0.875rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .pq-chip.primary {
+      border-color: rgba(27,94,66,0.3);
+      background: var(--accent-tint);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .pq-chip svg { flex-shrink: 0; }
+
+    /* ─── CÓMO FUNCIONA ───────────────────────────── */
+    .como-funciona {
+      padding: 3.5rem 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .como-header { margin-bottom: 2.5rem; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 600px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+    .step-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      background: var(--bg);
+      position: relative;
+      transition: border-color 250ms ease, box-shadow 250ms ease;
+    }
+    .step-card:hover { border-color: var(--accent-mid); box-shadow: 0 4px 20px rgba(27,94,66,0.07); }
+    .step-num {
+      width: 36px; height: 36px;
+      background: var(--accent-tint);
+      color: var(--accent);
+      border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8125rem; font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .step-title { font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.5rem; }
+    .step-body { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── CHAT DEMO ───────────────────────────────── */
+    .chat-demo { padding: 3.5rem 0; }
+    .chat-demo-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .chat-demo-inner { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+
+    .chat-mockup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(15,26,20,0.08);
+    }
+    .chat-header {
+      background: #075E54;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .chat-avatar {
+      width: 38px; height: 38px;
+      background: var(--accent-tint);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .chat-name { font-size: 0.9375rem; font-weight: 600; color: #fff; line-height: 1.2; }
+    .chat-status { font-size: 0.6875rem; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 0.3rem; }
+    .chat-status-dot { width: 5px; height: 5px; background: #4ADE80; border-radius: 50%; }
+    .chat-body {
+      background: #ECE5DD;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+    .chat-msg {
+      max-width: 84%;
+      padding: 0.5625rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+    .chat-msg.bot { background: #fff; align-self: flex-start; border-top-left-radius: 2px; }
+    .chat-msg.user { background: #DCF8C6; align-self: flex-end; border-top-right-radius: 2px; }
+    .chat-time { font-size: 0.625rem; color: rgba(0,0,0,0.4); text-align: right; margin-top: 0.25rem; }
+    .typing-indicator {
+      display: flex; align-items: center; gap: 4px;
+      padding: 0.625rem 0.875rem;
+      background: #fff; border-radius: 8px; border-top-left-radius: 2px;
+      align-self: flex-start; width: fit-content;
+    }
+    .typing-dot {
+      width: 5px; height: 5px; background: var(--subtle); border-radius: 50%;
+      animation: typing 1.4s ease-in-out infinite;
+    }
+    .typing-dot:nth-child(2){animation-delay:.2s} .typing-dot:nth-child(3){animation-delay:.4s}
+    @keyframes typing { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-3px);opacity:1} }
+
+    .chat-copy .section-title { margin-bottom: 0.875rem; }
+    .chat-features { display: flex; flex-direction: column; gap: 0.875rem; margin-top: 1.75rem; }
+    .chat-feat {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .chat-feat-icon {
+      width: 30px; height: 30px; flex-shrink: 0;
+      background: var(--accent-tint); color: var(--accent);
+      border-radius: var(--r-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 800;
+      margin-top: 1px;
+    }
+    .chat-feat-title { font-size: 0.875rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+    .chat-feat-body { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
+
+    /* ─── PRICING ─────────────────────────────────── */
+    .pricing {
+      padding: 3.5rem 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-header { margin-bottom: 2.5rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 600px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .pricing-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 250ms ease, box-shadow 250ms ease;
+    }
+    .pricing-card:hover { border-color: var(--accent-mid); box-shadow: 0 8px 28px rgba(27,94,66,0.09); }
+    .pricing-card.featured { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .featured-badge {
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      background: var(--accent-dark); color: #fff;
+      font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.75rem; border-radius: var(--r-full); white-space: nowrap;
+    }
+    .pricing-tier {
+      font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.375rem;
+    }
+    .pricing-card.featured .pricing-tier { color: rgba(255,255,255,0.6); }
+    .pricing-name { font-size: 1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); line-height: 1.2; margin-bottom: 0.25rem; }
+    .pricing-card.featured .pricing-name { color: #fff; }
+    .pricing-price {
+      font-size: 1.75rem; font-weight: 800; letter-spacing: -0.05em;
+      color: var(--text); line-height: 1; margin: 0.875rem 0 0.25rem;
+    }
+    .pricing-price sup { font-size: 1rem; font-weight: 600; vertical-align: super; letter-spacing: 0; }
+    .pricing-price span { font-size: 0.875rem; font-weight: 500; letter-spacing: 0; }
+    .pricing-card.featured .pricing-price { color: #fff; }
+    .pricing-recurrent { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
+    .pricing-card.featured .pricing-recurrent { color: rgba(255,255,255,0.6); }
+    .pricing-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+    .pricing-card.featured .pricing-divider { border-color: rgba(255,255,255,0.2); }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .pricing-feature { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8125rem; color: var(--muted); }
+    .pricing-card.featured .pricing-feature { color: rgba(255,255,255,0.8); }
+    .pricing-feature-check { color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pricing-card.featured .pricing-feature-check { color: rgba(255,255,255,0.9); }
+    .pricing-cta { margin-top: auto; }
+    .btn-pricing {
+      display: block; width: 100%; text-align: center;
+      padding: 0.6875rem 1rem; border-radius: var(--r-full);
+      font-family: inherit; font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 150ms ease;
+    }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border-strong); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); background: var(--accent-tint); }
+    .btn-on-green { background: #fff; border: none; color: var(--accent); }
+    .btn-on-green:hover { background: var(--accent-tint); }
+
+    /* ─── FAQ ─────────────────────────────────────── */
+    .faq { padding: 3.5rem 0; }
+    .faq-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 768px) { .faq-inner { grid-template-columns: 280px 1fr; gap: 4rem; } }
+    .faq-list { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%; background: var(--surface); border: none;
+      padding: 1.125rem 1.25rem;
+      text-align: left; font-family: inherit; font-size: 0.9375rem; font-weight: 600;
+      color: var(--text); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      transition: background 150ms ease;
+    }
+    .faq-q:hover { background: var(--bg); }
+    .faq-q.open { background: var(--accent-tint); color: var(--accent); }
+    .faq-icon { flex-shrink: 0; font-size: 1.125rem; transition: transform 250ms ease; }
+    .faq-q.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      display: none; padding: 0 1.25rem 1.125rem;
+      font-size: 0.9rem; color: var(--muted); line-height: 1.65; background: var(--surface);
+    }
+    .faq-a.open { display: block; }
+
+    /* ─── CTA FINAL ───────────────────────────────── */
+    .cta-final {
+      padding: 4.5rem 0;
+      background: var(--accent);
+      position: relative; overflow: hidden;
+    }
+    .cta-final::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .cta-final-inner { text-align: center; position: relative; }
+    .cta-final h2 {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800; letter-spacing: -0.05em; line-height: 1.05;
+      color: #fff; max-width: 20ch; margin: 0 auto 1rem;
+    }
+    .cta-sub {
+      font-size: 1rem; color: rgba(255,255,255,0.72);
+      max-width: 42ch; margin: 0 auto 2rem; line-height: 1.65;
+    }
+    .cta-btns { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .btn-white {
+      background: #fff; color: var(--accent);
+      font-family: inherit; font-size: 0.9375rem; font-weight: 700;
+      padding: 0.75rem 1.75rem; border-radius: var(--r-full); border: none;
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 150ms ease;
+    }
+    .btn-white:hover { background: var(--accent-tint); transform: translateY(-1px); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.1); color: #fff;
+      font-family: inherit; font-size: 0.9375rem; font-weight: 600;
+      padding: 0.75rem 1.75rem; border-radius: var(--r-full);
+      border: 1.5px solid rgba(255,255,255,0.28);
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 150ms ease;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    footer { background: var(--text); color: rgba(255,255,255,0.5); padding: 2.5rem 0; }
+    .footer-inner {
+      display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;
+    }
+    @media (min-width: 640px) {
+      .footer-inner { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+    .footer-logo {
+      font-size: 0.9375rem; font-weight: 800; letter-spacing: -0.04em;
+      color: #fff; text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .footer-copy { font-size: 0.8125rem; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.8125rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 150ms ease; }
+    .footer-links a:hover { color: #fff; }
+
+    /* ─── Fade-up animations ──────────────────────── */
+    .fade-up { opacity: 0; transform: translateY(18px); transition: opacity 380ms ease, transform 380ms ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        Autana
+      </a>
+      <ul class="nav-links">
+        <li><a href="#como-funciona">Cómo funciona</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#contacto" class="btn-primary" style="font-size:0.8125rem;padding:0.5rem 1.125rem">Habla con nosotros</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left -->
+        <div>
+          <div class="hero-badge fade-up">
+            <span class="hero-badge-dot"></span>
+            Agencia de conversión · Spain
+          </div>
+          <h1 class="fade-up">Tu negocio<br><em>reserva solo</em><br>mientras duermes.</h1>
+          <p class="hero-sub fade-up">Web que convierte, bot de WhatsApp con IA real y automatizaciones — para que ningún cliente potencial se pierda un fin de semana.</p>
+          <div class="hero-ctas fade-up">
+            <a href="#contacto" class="btn-primary btn-hero">Ver demostración →</a>
+            <a href="#servicios" class="btn-secondary btn-hero">Ver precios</a>
+          </div>
+          <div class="hero-proof fade-up">
+            <span class="hero-proof-item"><span class="proof-check">✓</span> Sin permanencia en web</span>
+            <span class="proof-sep"></span>
+            <span class="hero-proof-item"><span class="proof-check">✓</span> IA real, no reglas básicas</span>
+            <span class="proof-sep"></span>
+            <span class="hero-proof-item"><span class="proof-check">✓</span> Online en 2 semanas</span>
+          </div>
+        </div>
+        <!-- Right: proof card -->
+        <div class="hero-visual-col fade-up">
+          <div class="hero-card-main">
+            <p class="hero-card-label">Este fin de semana · Clínica Estética Demo</p>
+            <div class="hero-card-stats">
+              <div class="hero-stat green">
+                <div class="hero-stat-num">12</div>
+                <div class="hero-stat-label">reservas confirmadas</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-num">€0</div>
+                <div class="hero-stat-label">gestionadas manualmente</div>
+              </div>
+            </div>
+            <div class="hero-card-row">
+              <span class="hero-card-row-label">Consultas respondidas</span>
+              <span class="hero-card-row-val up">38 / 38</span>
+            </div>
+            <div class="hero-card-row">
+              <span class="hero-card-row-label">Tiempo de respuesta</span>
+              <span class="hero-card-row-val up">&lt; 30 seg</span>
+            </div>
+            <div class="hero-card-row" style="border-bottom:none;padding-bottom:0">
+              <span class="hero-card-row-label">Propietaria disponible</span>
+              <span class="hero-card-row-val">Durmiendo</span>
+            </div>
+          </div>
+          <div class="hero-notif">
+            <span class="notif-dot"></span>
+            Nueva reserva · Botox · Jueves 17:00
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA QUIÉN -->
+  <div class="para-quien">
+    <div class="container">
+      <p class="para-quien-label">Para quién</p>
+      <div class="para-quien-chips">
+        <span class="pq-chip primary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2l4 4-4 4"/><path d="M14 6l4-4"/><path d="m5 14 4 4"/><path d="M2 22l7-7"/><path d="m9 15 6-6"/></svg>
+          Clínicas estéticas
+        </span>
+        <span class="pq-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Academias y formación
+        </span>
+        <span class="pq-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Asesorías
+        </span>
+        <span class="pq-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 7v5"/><path d="M9.5 10h5"/></svg>
+          Salud y bienestar
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="como-funciona" id="como-funciona">
+    <div class="container">
+      <div class="como-header fade-up">
+        <span class="section-label">Cómo funciona</span>
+        <h2 class="section-title">Tres piezas. Un sistema que trabaja solo.</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card fade-up">
+          <div class="step-num">01</div>
+          <div class="step-title">Web que convierte</div>
+          <p class="step-body">Diseñada para que los visitantes reserven, no para que queden bonitas. CTA claro, Cal.com integrado, Stripe si aplica. Lista en 2 semanas.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num">02</div>
+          <div class="step-title">Bot WhatsApp con IA real</div>
+          <p class="step-body">Responde precios, dudas de procedimientos y disponibilidad. Envía el link de reserva. Escala al dueño si es necesario. 24/7 sin coste extra por conversación.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num">03</div>
+          <div class="step-title">Automatizaciones + ROI report</div>
+          <p class="step-body">Confirmaciones, recordatorios, seguimiento post-visita. Cada mes: cuántas reservas generó el bot y cuánto te ahorró — automáticamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAT DEMO -->
+  <section class="chat-demo">
+    <div class="container">
+      <div class="chat-demo-inner">
+        <div class="chat-mockup fade-up">
+          <div class="chat-header">
+            <div class="chat-avatar">💬</div>
+            <div>
+              <div class="chat-name">Clínica Estética · Autana Bot</div>
+              <div class="chat-status"><span class="chat-status-dot"></span> En línea ahora</div>
+            </div>
+          </div>
+          <div class="chat-body">
+            <div class="chat-msg user">
+              Hola, ¿cuánto cuesta el Botox y tenéis hueco esta semana?
+              <div class="chat-time">22:14 ✓✓</div>
+            </div>
+            <div class="chat-msg bot">
+              ¡Hola! 👋 Claro, te cuento.<br><br>
+              El <strong>tratamiento de Botox</strong> está desde <strong>€180</strong> (frente) hasta €320 (3 zonas). Eso lo valora la doctora en la consulta gratuita.<br><br>
+              Esta semana tenemos el <strong>jueves a las 17:00 y viernes a las 10:30</strong>. ¿Cuál te va mejor?
+              <div class="chat-time">22:14</div>
+            </div>
+            <div class="chat-msg user">
+              Jueves perfecto. ¿Cómo reservo?
+              <div class="chat-time">22:15 ✓✓</div>
+            </div>
+            <div class="chat-msg bot">
+              Perfecto 🎉 Te mando el enlace para confirmar en 2 minutos:<br><br>
+              <strong>→ clinica.autana.es/reservar</strong><br><br>
+              Te llegará confirmación por WhatsApp y email.
+              <div class="chat-time">22:15</div>
+            </div>
+            <div class="typing-indicator">
+              <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-copy fade-up">
+          <span class="section-label">El bot en acción</span>
+          <h2 class="section-title">IA real, no respuestas enlatadas.</h2>
+          <p class="section-sub">No es un chatbot de reglas. Es Claude (Anthropic) entrenado con la información de tu negocio. Entiende contexto, maneja objeciones y cierra la cita.</p>
+          <div class="chat-features">
+            <div class="chat-feat">
+              <div class="chat-feat-icon">24</div>
+              <div>
+                <div class="chat-feat-title">Disponible 24/7</div>
+                <div class="chat-feat-body">El sábado a las 22:00, el domingo, festivos. Cuando tú no puedes.</div>
+              </div>
+            </div>
+            <div class="chat-feat">
+              <div class="chat-feat-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div>
+                <div class="chat-feat-title">LOPD cumplida</div>
+                <div class="chat-feat-body">Solo gestiona horarios, precios y links. Nunca historial médico ni datos sensibles.</div>
+              </div>
+            </div>
+            <div class="chat-feat">
+              <div class="chat-feat-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><path d="M21 3l-7 7"/><path d="M10 4H4v16h16v-6"/></svg>
+              </div>
+              <div>
+                <div class="chat-feat-title">Escala al equipo cuando toca</div>
+                <div class="chat-feat-body">Si la consulta lo requiere, avisa al equipo al instante vía WhatsApp o email.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="servicios">
+    <div class="container">
+      <div class="pricing-header fade-up">
+        <span class="section-label">Servicios y precios</span>
+        <h2 class="section-title">Entra por donde necesitas.<br>Escala cuando veas resultados.</h2>
+        <p class="section-sub" style="max-width:48ch">Sin permanencias en la web. El retainer solo aplica cuando hay infraestructura activa corriendo para ti.</p>
+      </div>
+      <div class="pricing-grid">
+
+        <div class="pricing-card fade-up">
+          <p class="pricing-tier">Bot solo</p>
+          <p class="pricing-name">Para quien ya tiene web</p>
+          <div class="pricing-price"><sup>€</sup>300<span>–500</span></div>
+          <p class="pricing-recurrent">+ €150–200/mes retainer</p>
+          <hr class="pricing-divider">
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Bot WhatsApp con IA (Claude)</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Precios y disponibilidad</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Link de reserva automático</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Handoff humano</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="#contacto" class="btn-pricing btn-outline">Empezar →</a>
+          </div>
+        </div>
+
+        <div class="pricing-card fade-up">
+          <p class="pricing-tier">Tier 1</p>
+          <p class="pricing-name">Web que convierte</p>
+          <div class="pricing-price"><sup>€</sup>800<span>–1.200</span></div>
+          <p class="pricing-recurrent">Mantenimiento €50–100/mes (opcional)</p>
+          <hr class="pricing-divider">
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Web de conversión</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Cal.com integrado</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Stripe si aplica</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Sin permanencia</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="#contacto" class="btn-pricing btn-outline">Empezar →</a>
+          </div>
+        </div>
+
+        <div class="pricing-card featured fade-up">
+          <span class="featured-badge">Más popular</span>
+          <p class="pricing-tier">Tier 2</p>
+          <p class="pricing-name">Web + Bot WhatsApp</p>
+          <div class="pricing-price"><sup>€</sup>800<span>–1.200</span></div>
+          <p class="pricing-recurrent">+ €300/mes · mínimo 3 meses</p>
+          <hr class="pricing-divider">
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Todo de Tier 1</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Bot WhatsApp IA real</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Confirmaciones automáticas</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Soporte continuo</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="#contacto" class="btn-pricing btn-on-green">Empezar →</a>
+          </div>
+        </div>
+
+        <div class="pricing-card fade-up">
+          <p class="pricing-tier">Tier 3</p>
+          <p class="pricing-name">Full bundle</p>
+          <div class="pricing-price"><sup>€</sup>2.000<span>–3.000</span></div>
+          <p class="pricing-recurrent">+ €400/mes · mínimo 6 meses</p>
+          <hr class="pricing-divider">
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Todo de Tier 2</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Automatizaciones avanzadas</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> ROI report mensual auto</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Seguimiento post-visita</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="#contacto" class="btn-pricing btn-outline">Empezar →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq-inner">
+        <div class="fade-up">
+          <span class="section-label">FAQ</span>
+          <h2 class="section-title">Preguntas frecuentes</h2>
+          <p class="section-sub">¿No encuentras lo que buscas?</p>
+          <a href="#contacto" class="btn-primary" style="margin-top:1.25rem;display:inline-flex;font-size:0.875rem">Escríbenos →</a>
+        </div>
+        <div class="faq-list fade-up">
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo tarda en estar listo? <span class="faq-icon">+</span></button>
+            <div class="faq-a">La web suele estar lista en 10–14 días. El bot, una vez con acceso a la API de 360dialog (verificación Meta: 3–14 días), en 3–5 días adicionales. Bundle completo: 3–4 semanas desde el primer pago.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">¿El bot tiene acceso a datos médicos? <span class="faq-icon">+</span></button>
+            <div class="faq-a">No. El bot cumple con la LOPD: solo gestiona horarios, precios e información pública. Nunca accede ni almacena historial médico ni datos sensibles de salud.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">¿Puedo empezar solo con la web y añadir el bot después? <span class="faq-icon">+</span></button>
+            <div class="faq-a">Sí. El Tier 1 no tiene retainer obligatorio. Si ves resultados y quieres escalar, añadimos el bot. El precio de integración sobre una web ya construida es menor.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si quiero cancelar el retainer? <span class="faq-icon">+</span></button>
+            <div class="faq-a">El retainer aplica en Tier 2 (mínimo 3 meses) y Tier 3 (mínimo 6 meses) porque hay infraestructura activa corriendo. Pasado el mínimo, cancelas con 30 días de aviso. La web siempre es tuya.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">¿Necesito tener cuenta de WhatsApp Business? <span class="faq-icon">+</span></button>
+            <div class="faq-a">Sí, necesitas una cuenta de Meta Business verificada. Te guiamos en todo el proceso. La verificación puede tardar entre 3 y 14 días — te recomendamos iniciarlo cuanto antes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final" id="contacto">
+    <div class="container">
+      <div class="cta-final-inner">
+        <h2>¿Cuántas reservas perdiste este fin de semana?</h2>
+        <p class="cta-sub">15 minutos. Sin deck, sin presión. Vemos si tiene sentido trabajar juntos y qué tier encaja con lo que necesitas ahora.</p>
+        <div class="cta-btns">
+          <a href="https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20Autana" class="btn-white" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="mailto:hola@autana.es" class="btn-ghost">hola@autana.es</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#" class="footer-logo">
+          <span style="width:6px;height:6px;background:#2D7A56;border-radius:50%;display:inline-block"></span>
+          Autana
+        </a>
+        <p class="footer-copy">© 2026 Autana. Todos los derechos reservados.</p>
+        <ul class="footer-links">
+          <li><a href="#">Aviso legal</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">LOPD</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = btn.classList.contains('open');
+      document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      if (!isOpen) { btn.classList.add('open'); answer.classList.add('open'); }
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 55);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
