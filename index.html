@@ -212,22 +212,11 @@
     .hero-ctas { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
     .btn-hero { font-size: 0.9375rem; padding: 0.75rem 1.625rem; }
 
-    .hero-proof {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-      flex-wrap: wrap;
-    }
-    .hero-proof-item {
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
+    .hero-trust {
       font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--muted);
+      color: var(--subtle);
+      letter-spacing: 0.01em;
     }
-    .proof-check { color: var(--accent); font-weight: 700; }
-    .proof-sep { width: 1px; height: 14px; background: var(--border); }
 
     /* Hero visual card */
     .hero-visual-col { position: relative; }
@@ -346,38 +335,56 @@
 
     /* ─── CÓMO FUNCIONA ───────────────────────────── */
     .como-funciona {
-      padding: 3.5rem 0;
+      padding: 4rem 0;
       background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    .como-header { margin-bottom: 2.5rem; }
-    .steps-grid {
+    .como-inner {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 3rem;
     }
-    @media (min-width: 600px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
-    .step-card {
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 1.5rem;
-      background: var(--bg);
-      position: relative;
-      transition: border-color 250ms ease, box-shadow 250ms ease;
+    @media (min-width: 900px) {
+      .como-inner { grid-template-columns: 240px 1fr; gap: 5rem; align-items: start; }
     }
-    .step-card:hover { border-color: var(--accent-mid); box-shadow: 0 4px 20px rgba(27,94,66,0.07); }
-    .step-num {
-      width: 36px; height: 36px;
-      background: var(--accent-tint);
-      color: var(--accent);
-      border-radius: var(--r-md);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8125rem; font-weight: 800;
+    .como-title {
+      font-size: clamp(1.625rem, 3vw, 2.125rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1.05;
+      color: var(--text);
       margin-bottom: 1rem;
     }
-    .step-title { font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.5rem; }
-    .step-body { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+    .como-desc { font-size: 0.9375rem; color: var(--muted); line-height: 1.65; }
+    .como-steps { display: flex; flex-direction: column; }
+    .como-step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 1.25rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+    .como-step:last-child { padding-bottom: 0; }
+    .como-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 19px; top: 44px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .cs-num {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1.5px solid var(--border-strong);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8125rem; font-weight: 800; color: var(--accent);
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .cs-body h3 {
+      font-size: 1rem; font-weight: 700; letter-spacing: -0.025em;
+      color: var(--text); margin-bottom: 0.4rem; padding-top: 0.5625rem;
+    }
+    .cs-body p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
 
     /* ─── CHAT DEMO ───────────────────────────────── */
     .chat-demo { padding: 3.5rem 0; }
@@ -445,20 +452,18 @@
     @keyframes typing { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-3px);opacity:1} }
 
     .chat-copy .section-title { margin-bottom: 0.875rem; }
-    .chat-features { display: flex; flex-direction: column; gap: 0.875rem; margin-top: 1.75rem; }
-    .chat-feat {
-      display: flex; align-items: flex-start; gap: 0.75rem;
+    .chat-feats {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 0.875rem; margin-top: 1.75rem;
     }
-    .chat-feat-icon {
-      width: 30px; height: 30px; flex-shrink: 0;
-      background: var(--accent-tint); color: var(--accent);
-      border-radius: var(--r-md);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 800;
-      margin-top: 1px;
+    .chat-feats li {
+      font-size: 0.875rem; color: var(--muted); line-height: 1.6;
+      padding-left: 1.125rem; position: relative;
     }
-    .chat-feat-title { font-size: 0.875rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
-    .chat-feat-body { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
+    .chat-feats li::before {
+      content: '—'; position: absolute; left: 0;
+      color: var(--accent); font-weight: 700;
+    }
 
     /* ─── PRICING ─────────────────────────────────── */
     .pricing {
@@ -657,13 +662,7 @@
             <a href="#contacto" class="btn-primary btn-hero">Ver demostración →</a>
             <a href="#servicios" class="btn-secondary btn-hero">Ver precios</a>
           </div>
-          <div class="hero-proof fade-up">
-            <span class="hero-proof-item"><span class="proof-check">✓</span> Sin permanencia en web</span>
-            <span class="proof-sep"></span>
-            <span class="hero-proof-item"><span class="proof-check">✓</span> IA real, no reglas básicas</span>
-            <span class="proof-sep"></span>
-            <span class="hero-proof-item"><span class="proof-check">✓</span> Online en 2 semanas</span>
-          </div>
+          <p class="hero-trust fade-up">Sin permanencia &nbsp;&middot;&nbsp; IA real con Anthropic &nbsp;&middot;&nbsp; Online en 2 semanas</p>
         </div>
         <!-- Right: proof card -->
         <div class="hero-visual-col fade-up">
@@ -704,7 +703,6 @@
   <!-- PARA QUIÉN -->
   <div class="para-quien">
     <div class="container">
-      <p class="para-quien-label">Para quién</p>
       <div class="para-quien-chips">
         <span class="pq-chip primary">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2l4 4-4 4"/><path d="M14 6l4-4"/><path d="m5 14 4 4"/><path d="M2 22l7-7"/><path d="m9 15 6-6"/></svg>
@@ -729,25 +727,33 @@
   <!-- CÓMO FUNCIONA -->
   <section class="como-funciona" id="como-funciona">
     <div class="container">
-      <div class="como-header fade-up">
-        <span class="section-label">Cómo funciona</span>
-        <h2 class="section-title">Tres piezas. Un sistema que trabaja solo.</h2>
-      </div>
-      <div class="steps-grid">
-        <div class="step-card fade-up">
-          <div class="step-num">01</div>
-          <div class="step-title">Web que convierte</div>
-          <p class="step-body">Diseñada para que los visitantes reserven, no para que queden bonitas. CTA claro, Cal.com integrado, Stripe si aplica. Lista en 2 semanas.</p>
+      <div class="como-inner fade-up">
+        <div>
+          <h2 class="como-title">Tres piezas.<br>Un sistema<br>que trabaja solo.</h2>
+          <p class="como-desc">Sin tecnología compleja de tu parte. Solo resultados medibles.</p>
         </div>
-        <div class="step-card fade-up">
-          <div class="step-num">02</div>
-          <div class="step-title">Bot WhatsApp con IA real</div>
-          <p class="step-body">Responde precios, dudas de procedimientos y disponibilidad. Envía el link de reserva. Escala al dueño si es necesario. 24/7 sin coste extra por conversación.</p>
-        </div>
-        <div class="step-card fade-up">
-          <div class="step-num">03</div>
-          <div class="step-title">Automatizaciones + ROI report</div>
-          <p class="step-body">Confirmaciones, recordatorios, seguimiento post-visita. Cada mes: cuántas reservas generó el bot y cuánto te ahorró — automáticamente.</p>
+        <div class="como-steps">
+          <div class="como-step">
+            <div class="cs-num">1</div>
+            <div class="cs-body">
+              <h3>Web que convierte</h3>
+              <p>Diseñada para que los visitantes reserven, no para que queden bonitas. CTA claro, Cal.com integrado, Stripe si aplica. Lista en 2 semanas.</p>
+            </div>
+          </div>
+          <div class="como-step">
+            <div class="cs-num">2</div>
+            <div class="cs-body">
+              <h3>Bot WhatsApp con IA real</h3>
+              <p>Responde precios, dudas de procedimientos y disponibilidad. Envía el link de reserva. Escala al dueño si es necesario. 24/7 sin coste extra por conversación.</p>
+            </div>
+          </div>
+          <div class="como-step">
+            <div class="cs-num">3</div>
+            <div class="cs-body">
+              <h3>Automatizaciones + ROI report</h3>
+              <p>Confirmaciones, recordatorios, seguimiento post-visita. Cada mes: cuántas reservas generó el bot y cuánto te ahorró, de forma automática.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -792,36 +798,13 @@
           </div>
         </div>
         <div class="chat-copy fade-up">
-          <span class="section-label">El bot en acción</span>
           <h2 class="section-title">IA real, no respuestas enlatadas.</h2>
           <p class="section-sub">No es un chatbot de reglas. Es Claude (Anthropic) entrenado con la información de tu negocio. Entiende contexto, maneja objeciones y cierra la cita.</p>
-          <div class="chat-features">
-            <div class="chat-feat">
-              <div class="chat-feat-icon">24</div>
-              <div>
-                <div class="chat-feat-title">Disponible 24/7</div>
-                <div class="chat-feat-body">El sábado a las 22:00, el domingo, festivos. Cuando tú no puedes.</div>
-              </div>
-            </div>
-            <div class="chat-feat">
-              <div class="chat-feat-icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div>
-                <div class="chat-feat-title">LOPD cumplida</div>
-                <div class="chat-feat-body">Solo gestiona horarios, precios y links. Nunca historial médico ni datos sensibles.</div>
-              </div>
-            </div>
-            <div class="chat-feat">
-              <div class="chat-feat-icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><path d="M21 3l-7 7"/><path d="M10 4H4v16h16v-6"/></svg>
-              </div>
-              <div>
-                <div class="chat-feat-title">Escala al equipo cuando toca</div>
-                <div class="chat-feat-body">Si la consulta lo requiere, avisa al equipo al instante vía WhatsApp o email.</div>
-              </div>
-            </div>
-          </div>
+          <ul class="chat-feats">
+            <li>Disponible cuando tu clínica está cerrada — sábados, domingos, festivos, 22:00.</li>
+            <li>Solo gestiona horarios, precios y el link de reserva. LOPD cumplida desde el día 1.</li>
+            <li>Si la consulta lo requiere, avisa al equipo al instante por WhatsApp o email.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -831,7 +814,6 @@
   <section class="pricing" id="servicios">
     <div class="container">
       <div class="pricing-header fade-up">
-        <span class="section-label">Servicios y precios</span>
         <h2 class="section-title">Entra por donde necesitas.<br>Escala cuando veas resultados.</h2>
         <p class="section-sub" style="max-width:48ch">Sin permanencias en la web. El retainer solo aplica cuando hay infraestructura activa corriendo para ti.</p>
       </div>
@@ -915,7 +897,6 @@
     <div class="container">
       <div class="faq-inner">
         <div class="fade-up">
-          <span class="section-label">FAQ</span>
           <h2 class="section-title">Preguntas frecuentes</h2>
           <p class="section-sub">¿No encuentras lo que buscas?</p>
           <a href="#contacto" class="btn-primary" style="margin-top:1.25rem;display:inline-flex;font-size:0.875rem">Escríbenos →</a>
