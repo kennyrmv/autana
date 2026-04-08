@@ -386,83 +386,249 @@
     }
     .cs-body p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
 
-    /* ─── CHAT DEMO ───────────────────────────────── */
-    .chat-demo { padding: 3.5rem 0; }
-    .chat-demo-inner {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    @media (min-width: 768px) { .chat-demo-inner { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+    /* ─── VERTICALES DEMO ────────────────────────── */
+    .v-demo { padding: 5rem 0; background: #F0F2EF; }
+    .v-demo-header { text-align: center; max-width: 580px; margin: 0 auto 2.75rem; }
 
-    .chat-mockup {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
+    .v-tabs {
+      display: flex; flex-wrap: nowrap; gap: 0.5rem;
+      overflow-x: auto; padding-bottom: 0.625rem;
+      scrollbar-width: none; margin-bottom: 2.5rem;
+    }
+    .v-tabs::-webkit-scrollbar { display: none; }
+    .v-tab {
+      flex-shrink: 0; padding: 0.5625rem 1.0625rem;
+      border: 1.5px solid var(--border); border-radius: var(--r-full);
+      background: var(--surface); font-family: inherit;
+      font-size: 0.8125rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; text-decoration: none;
+      transition: all 150ms ease; white-space: nowrap; line-height: 1;
+    }
+    .v-tab:hover { border-color: var(--accent-mid); color: var(--accent); }
+    .v-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .v-tab--cta {
+      background: var(--accent-dark); border-color: var(--accent-dark); color: #fff;
+      margin-left: auto;
+    }
+    .v-tab--cta:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .v-content {
+      display: grid; grid-template-columns: 1fr;
+      gap: 2rem; align-items: start;
+    }
+    @media (min-width: 768px) { .v-content { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
+
+    .v-examples-label {
+      font-size: 0.875rem; color: var(--muted);
+      margin-bottom: 1.125rem; line-height: 1.5;
+    }
+    .v-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .v-pill {
+      padding: 0.5rem 0.9375rem; border: 1.5px solid var(--border-strong);
+      border-radius: var(--r-full); background: var(--surface);
+      font-family: inherit; font-size: 0.8125rem; font-weight: 500;
+      color: var(--text); cursor: pointer; text-align: left; line-height: 1.4;
+      transition: all 150ms ease;
+    }
+    .v-pill:hover:not(:disabled):not(.used) { border-color: var(--accent); color: var(--accent); background: var(--accent-tint); }
+    .v-pill.used { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+    .v-pill:disabled:not(.used) { opacity: 0.45; cursor: not-allowed; }
+    .v-reset {
+      background: none; border: none; font-family: inherit;
+      font-size: 0.75rem; color: var(--muted); cursor: pointer; padding: 0;
+      text-decoration: underline; text-underline-offset: 2px;
+    }
+    .v-reset:hover { color: var(--accent); }
+
+    .v-chat-wrap { position: sticky; top: 5rem; }
+    .v-chat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
       box-shadow: 0 16px 48px rgba(15,26,20,0.08);
     }
-    .chat-header {
-      background: #075E54;
-      padding: 0.875rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    .v-chat-header {
+      background: #075E54; padding: 0.875rem 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
     }
-    .chat-avatar {
-      width: 38px; height: 38px;
-      background: var(--accent-tint);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
+    .v-chat-avatar {
+      width: 38px; height: 38px; background: var(--accent-tint);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
     }
-    .chat-name { font-size: 0.9375rem; font-weight: 600; color: #fff; line-height: 1.2; }
-    .chat-status { font-size: 0.6875rem; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 0.3rem; }
-    .chat-status-dot { width: 5px; height: 5px; background: #4ADE80; border-radius: 50%; }
-    .chat-body {
-      background: #ECE5DD;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.625rem;
+    .v-chat-name { font-size: 0.9375rem; font-weight: 600; color: #fff; line-height: 1.2; }
+    .v-chat-status { font-size: 0.6875rem; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 0.3rem; }
+    .v-status-dot { width: 5px; height: 5px; background: #4ADE80; border-radius: 50%; }
+    .v-chat-body {
+      background: #ECE5DD; padding: 1rem;
+      display: flex; flex-direction: column; gap: 0.625rem;
+      min-height: 300px; max-height: 400px; overflow-y: auto;
+      scroll-behavior: smooth;
     }
-    .chat-msg {
-      max-width: 84%;
-      padding: 0.5625rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.8125rem;
-      line-height: 1.5;
+    .v-msg {
+      max-width: 84%; padding: 0.5625rem 0.75rem; border-radius: 8px;
+      font-size: 0.8125rem; line-height: 1.5;
+      animation: vMsgIn 200ms ease both;
     }
-    .chat-msg.bot { background: #fff; align-self: flex-start; border-top-left-radius: 2px; }
-    .chat-msg.user { background: #DCF8C6; align-self: flex-end; border-top-right-radius: 2px; }
-    .chat-time { font-size: 0.625rem; color: rgba(0,0,0,0.4); text-align: right; margin-top: 0.25rem; }
-    .typing-indicator {
-      display: flex; align-items: center; gap: 4px;
-      padding: 0.625rem 0.875rem;
+    .v-msg.bot { background: #fff; align-self: flex-start; border-top-left-radius: 2px; }
+    .v-msg.user { background: #DCF8C6; align-self: flex-end; border-top-right-radius: 2px; }
+    .v-msg-time { font-size: 0.625rem; color: rgba(0,0,0,0.4); text-align: right; margin-top: 0.25rem; }
+    @keyframes vMsgIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    .v-typing {
+      display: flex; align-items: center; gap: 4px; padding: 0.625rem 0.875rem;
       background: #fff; border-radius: 8px; border-top-left-radius: 2px;
       align-self: flex-start; width: fit-content;
+      animation: vMsgIn 200ms ease both;
     }
-    .typing-dot {
+    .v-typing-dot {
       width: 5px; height: 5px; background: var(--subtle); border-radius: 50%;
-      animation: typing 1.4s ease-in-out infinite;
+      animation: vTyping 1.4s ease-in-out infinite;
     }
-    .typing-dot:nth-child(2){animation-delay:.2s} .typing-dot:nth-child(3){animation-delay:.4s}
-    @keyframes typing { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-3px);opacity:1} }
+    .v-typing-dot:nth-child(2){animation-delay:.2s} .v-typing-dot:nth-child(3){animation-delay:.4s}
+    @keyframes vTyping { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-3px);opacity:1} }
 
-    .chat-copy .section-title { margin-bottom: 0.875rem; }
-    .chat-feats {
-      list-style: none; display: flex; flex-direction: column;
-      gap: 0.875rem; margin-top: 1.75rem;
+    /* ─── RESULTADOS ─────────────────────────────── */
+    .resultados { padding: 6rem 0; background: var(--bg); }
+    .resultados-header { margin-bottom: 3rem; }
+
+    .resultados-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
     }
-    .chat-feats li {
-      font-size: 0.875rem; color: var(--muted); line-height: 1.6;
-      padding-left: 1.125rem; position: relative;
+    @media (min-width: 768px) {
+      .resultados-grid { grid-template-columns: repeat(3, 1fr); }
     }
-    .chat-feats li::before {
-      content: '—'; position: absolute; left: 0;
-      color: var(--accent); font-weight: 700;
+
+    .caso-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .caso-sector {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.875rem;
+    }
+
+    .caso-headline {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .caso-negocio {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .caso-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .caso-metricas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .caso-metrica { text-align: center; }
+
+    .caso-num {
+      font-size: 1.375rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .caso-label {
+      font-size: 0.6875rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .caso-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .caso-cta {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 150ms ease;
+      margin-top: auto;
+    }
+    .caso-cta:hover { opacity: 0.7; }
+    .caso-cta--muted { color: var(--subtle); cursor: default; }
+    .caso-cta--muted:hover { opacity: 1; }
+
+    .caso-card--soon { opacity: 0.85; }
+
+    .caso-card--next {
+      background: var(--accent-tint);
+      border-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .caso-next-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.75rem;
+    }
+
+    .caso-next-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .caso-next-title {
+      font-size: 1.125rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .caso-next-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 26ch;
     }
 
     /* ─── PRICING ─────────────────────────────────── */
@@ -753,53 +919,119 @@
     </div>
   </section>
 
-  <!-- CHAT DEMO -->
-  <section class="chat-demo">
+  <!-- VERTICALES DEMO -->
+  <section class="v-demo" id="demo">
     <div class="container">
-      <div class="chat-demo-inner">
-        <div class="chat-mockup fade-up">
-          <div class="chat-header">
-            <div class="chat-avatar">💬</div>
-            <div>
-              <div class="chat-name">Clínica Estética · Autana Bot</div>
-              <div class="chat-status"><span class="chat-status-dot"></span> En línea ahora</div>
+      <div class="v-demo-header fade-up">
+        <span class="section-label">Pruébalo ahora</span>
+        <h2 class="section-title">Ve cómo trabaja el bot<br>en tu sector</h2>
+        <p class="section-sub">IA real, no respuestas enlatadas. Selecciona tu tipo de negocio y mira exactamente qué le responde el bot a tus clientes.</p>
+      </div>
+
+      <div class="v-tabs fade-up" id="vTabs" role="tablist">
+        <button class="v-tab active" data-v="clinica" role="tab">🦷 Clínica dental</button>
+        <button class="v-tab" data-v="estetica" role="tab">💆 Estética</button>
+        <button class="v-tab" data-v="peluqueria" role="tab">✂️ Peluquería</button>
+        <button class="v-tab" data-v="academia" role="tab">📚 Academia</button>
+        <button class="v-tab" data-v="restaurante" role="tab">🍽️ Restaurante</button>
+        <a href="#contacto" class="v-tab v-tab--cta">Tu negocio →</a>
+      </div>
+
+      <div class="v-content fade-up">
+        <div class="v-examples">
+          <p class="v-examples-label">Escribe una pregunta o prueba estos ejemplos para ver cómo responde el bot:</p>
+          <div class="v-pills" id="vPills"></div>
+          <button class="v-reset" id="vReset">↺ Reiniciar conversación</button>
+        </div>
+        <div class="v-chat-wrap">
+          <div class="v-chat">
+            <div class="v-chat-header">
+              <div class="v-chat-avatar">💬</div>
+              <div>
+                <div class="v-chat-name" id="vChatName">Clínica Dental · Bot</div>
+                <div class="v-chat-status"><span class="v-status-dot"></span> En línea ahora</div>
+              </div>
             </div>
-          </div>
-          <div class="chat-body">
-            <div class="chat-msg user">
-              Hola, ¿cuánto cuesta el Botox y tenéis hueco esta semana?
-              <div class="chat-time">22:14 ✓✓</div>
-            </div>
-            <div class="chat-msg bot">
-              ¡Hola! 👋 Claro, te cuento.<br><br>
-              El <strong>tratamiento de Botox</strong> está desde <strong>€180</strong> (frente) hasta €320 (3 zonas). Eso lo valora la doctora en la consulta gratuita.<br><br>
-              Esta semana tenemos el <strong>jueves a las 17:00 y viernes a las 10:30</strong>. ¿Cuál te va mejor?
-              <div class="chat-time">22:14</div>
-            </div>
-            <div class="chat-msg user">
-              Jueves perfecto. ¿Cómo reservo?
-              <div class="chat-time">22:15 ✓✓</div>
-            </div>
-            <div class="chat-msg bot">
-              Perfecto 🎉 Te mando el enlace para confirmar en 2 minutos:<br><br>
-              <strong>→ clinica.autana.es/reservar</strong><br><br>
-              Te llegará confirmación por WhatsApp y email.
-              <div class="chat-time">22:15</div>
-            </div>
-            <div class="typing-indicator">
-              <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+            <div class="v-chat-body" id="vChatBody">
+              <div class="v-msg bot">
+                ¡Hola! 👋 Soy el asistente virtual. ¿En qué puedo ayudarte hoy?
+                <div class="v-msg-time">ahora</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="chat-copy fade-up">
-          <h2 class="section-title">IA real, no respuestas enlatadas.</h2>
-          <p class="section-sub">No es un chatbot de reglas. Es Claude (Anthropic) entrenado con la información de tu negocio. Entiende contexto, maneja objeciones y cierra la cita.</p>
-          <ul class="chat-feats">
-            <li>Disponible cuando tu clínica está cerrada — sábados, domingos, festivos, 22:00.</li>
-            <li>Solo gestiona horarios, precios y el link de reserva. LOPD cumplida desde el día 1.</li>
-            <li>Si la consulta lo requiere, avisa al equipo al instante por WhatsApp o email.</li>
-          </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="resultados" id="resultados">
+    <div class="container">
+      <div class="resultados-header fade-up">
+        <span class="section-label">Resultados reales</span>
+        <h2 class="section-title">Lo que pasa cuando el sistema<br>lleva unos meses corriendo.</h2>
+        <p class="section-sub" style="max-width:52ch">Números de negocios reales, no proyecciones. El bot trabaja mientras el negocio está cerrado.</p>
+      </div>
+      <div class="resultados-grid">
+
+        <!-- Case study 1: Autana misma -->
+        <div class="caso-card fade-up">
+          <div class="caso-sector">Agencia digital</div>
+          <div class="caso-headline">"Respondemos consultas a las 2 de la mañana sin tocar el móvil."</div>
+          <div class="caso-negocio">Autana · Madrid</div>
+          <div class="caso-divider"></div>
+          <div class="caso-metricas">
+            <div class="caso-metrica">
+              <div class="caso-num">24/7</div>
+              <div class="caso-label">disponibilidad del bot</div>
+            </div>
+            <div class="caso-metrica">
+              <div class="caso-num">&lt;30s</div>
+              <div class="caso-label">tiempo de primera respuesta</div>
+            </div>
+            <div class="caso-metrica">
+              <div class="caso-num">100%</div>
+              <div class="caso-label">consultas respondidas sin intervención</div>
+            </div>
+          </div>
+          <div class="caso-desc">El bot de Autana responde consultas de clientes potenciales, explica servicios y agenda llamadas de 15 minutos — sin que Kenny toque el móvil.</div>
+          <a href="https://wa.me/34600000000?text=Hola%2C%20quiero%20ver%20el%20bot%20en%20acción" class="caso-cta" target="_blank" rel="noopener">Hablar con el bot →</a>
         </div>
+
+        <!-- Case study 2: joyería (en preparación) -->
+        <div class="caso-card caso-card--soon fade-up">
+          <div class="caso-sector">Joyería personalizada</div>
+          <div class="caso-headline">"Lanzamos el bot junto a la primera campaña de ads."</div>
+          <div class="caso-negocio">En preparación · España</div>
+          <div class="caso-divider"></div>
+          <div class="caso-metricas">
+            <div class="caso-metrica">
+              <div class="caso-num">—</div>
+              <div class="caso-label">bot configurado y listo</div>
+            </div>
+            <div class="caso-metrica">
+              <div class="caso-num">Mayo</div>
+              <div class="caso-label">lanzamiento con ads</div>
+            </div>
+            <div class="caso-metrica">
+              <div class="caso-num">0€</div>
+              <div class="caso-label">coste extra por conversación</div>
+            </div>
+          </div>
+          <div class="caso-desc">Joyería artesanal especializada en piezas personalizadas. El bot cualifica leads, explica el proceso de personalización y agenda consultas — antes del primer anuncio.</div>
+          <span class="caso-cta caso-cta--muted">Resultados en mayo →</span>
+        </div>
+
+        <!-- Card: próximo cliente -->
+        <div class="caso-card caso-card--next fade-up">
+          <div class="caso-next-inner">
+            <div class="caso-next-icon">+</div>
+            <div class="caso-next-title">¿Tu negocio aquí?</div>
+            <p class="caso-next-desc">Estamos abriendo 2 plazas de piloto. Precio de lanzamiento, case study documentado con tus métricas reales.</p>
+            <a href="#contacto" class="btn-primary" style="font-size:0.875rem">Solicitar plaza piloto →</a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -954,6 +1186,7 @@
   </footer>
 
   <script>
+    /* ─── FAQ ─────────────────────────────────────────── */
     function toggleFaq(btn) {
       const answer = btn.nextElementSibling;
       const isOpen = btn.classList.contains('open');
@@ -961,6 +1194,8 @@
       document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
       if (!isOpen) { btn.classList.add('open'); answer.classList.add('open'); }
     }
+
+    /* ─── FADE-UP ──────────────────────────────────────── */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
@@ -970,6 +1205,176 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    /* ─── VERTICALES DEMO ──────────────────────────────── */
+    const V_DATA = {
+      clinica: {
+        botName: 'Clínica Dental · Bot',
+        questions: [
+          '¿Cuánto cuesta una limpieza dental?',
+          '¿Tenéis hueco esta semana?',
+          '¿Hacéis blanqueamiento?',
+          '¿Aceptáis seguro Adeslas?'
+        ],
+        answers: {
+          '¿Cuánto cuesta una limpieza dental?': 'La limpieza dental está a <strong>€65</strong> con revisión incluida. Si reservas antes del 31 de mayo tienes un 10% de descuento. ¿Quieres ver los huecos disponibles esta semana? 😊',
+          '¿Tenéis hueco esta semana?': 'Esta semana tenemos el <strong>martes a las 10:00</strong> y el <strong>jueves a las 17:30</strong>. ¿Cuál te va mejor? Te reservo en 2 minutos 🗓️',
+          '¿Hacéis blanqueamiento?': '¡Sí! Blanqueamiento Philips Zoom en clínica desde <strong>€280</strong> y con férulas en casa desde <strong>€120</strong>. ¿Te cuento la diferencia entre los dos?',
+          '¿Aceptáis seguro Adeslas?': 'Sí, trabajamos con Adeslas, Sanitas y Mapfre. Para confirmar tu cobertura necesito tu número de póliza. ¿Lo tienes a mano? 😊'
+        }
+      },
+      estetica: {
+        botName: 'Centro Estética · Bot',
+        questions: [
+          '¿Cuánto cuesta la depilación láser?',
+          '¿Tenéis disponibilidad mañana?',
+          '¿Hacéis tratamientos faciales?',
+          '¿Cuántas sesiones necesito?'
+        ],
+        answers: {
+          '¿Cuánto cuesta la depilación láser?': 'Depende de la zona 😊 Piernas completas: <strong>€90/sesión</strong>, axilas: <strong>€35/sesión</strong>. Con bono de 6 sesiones tienes un 20% de descuento. ¿Para qué zona te interesa?',
+          '¿Tenéis disponibilidad mañana?': 'Mañana tenemos huecos a las <strong>10:00, 12:30 y 16:00</strong>. ¿Cuál te va bien? Dime tu nombre y el tratamiento y lo confirmo ahora 📅',
+          '¿Hacéis tratamientos faciales?': 'Tenemos facial hidratante, peeling químico, microneedling y tratamiento antiedad. El más solicitado este mes es el <strong>facial de vitamina C</strong> a €65. ¿Quieres más info?',
+          '¿Cuántas sesiones necesito?': 'La media es <strong>6–8 sesiones</strong> cada 4–6 semanas. En la primera visita la esteticista hace una valoración gratuita y te lo dice exactamente. ¿Te reservo?'
+        }
+      },
+      peluqueria: {
+        botName: 'Peluquería · Bot',
+        questions: [
+          '¿Cuánto cuesta teñirse el pelo?',
+          '¿Hacéis balayage?',
+          '¿A qué hora cerráis los sábados?',
+          '¿Necesito cita previa?'
+        ],
+        answers: {
+          '¿Cuánto cuesta teñirse el pelo?': 'El tinte completo va desde <strong>€45</strong> (pelo corto) hasta <strong>€75</strong> (pelo largo). El precio final depende del largo y el producto. ¿Te hago una consulta gratuita rápida antes de reservar?',
+          '¿Hacéis balayage?': '¡Es uno de nuestros servicios estrella! 💇 Balayage desde <strong>€85</strong> según largo, incluye tratamiento hidratante. ¿Ves disponibilidad esta semana?',
+          '¿A qué hora cerráis los sábados?': 'Los sábados abrimos de <strong>9:00 a 14:00</strong>. Los viernes tenemos horario especial hasta las 20:00. ¿Te reservo para el próximo sábado?',
+          '¿Necesito cita previa?': 'Sí, trabajamos con cita para evitar esperas 😊 Reserva ahora y confirmo en menos de 1 minuto. ¿Qué servicio te interesa? ✂️'
+        }
+      },
+      academia: {
+        botName: 'Academia · Bot',
+        questions: [
+          '¿Cuánto cuesta el curso de inglés?',
+          '¿Cuándo empieza el próximo grupo?',
+          '¿Hacéis clases online?',
+          '¿Tenéis nivel B2?'
+        ],
+        answers: {
+          '¿Cuánto cuesta el curso de inglés?': 'El curso anual está a <strong>€45/mes</strong> con 2 clases semanales de 90 min. Pagando trimestre completo baja a <strong>€40/mes</strong>. ¿Para qué nivel te interesa?',
+          '¿Cuándo empieza el próximo grupo?': 'El próximo grupo arranca el <strong>2 de septiembre</strong>. Las plazas son limitadas. ¿Te apunto en lista de espera para avisarte primero? 📩',
+          '¿Hacéis clases online?': '¡Sí! Tenemos modalidad 100% online e híbrida. Clases en directo con el profesor, no grabaciones. ¿Cuál te vendría mejor?',
+          '¿Tenéis nivel B2?': 'Tenemos grupos de A1 a C1. Para el B2 hacemos una prueba de nivel gratuita de 10 minutos para ubicarte bien. ¿Cuándo puedes hacer el test? 📚'
+        }
+      },
+      restaurante: {
+        botName: 'Restaurante · Bot',
+        questions: [
+          '¿Tenéis mesa para 4 el viernes?',
+          '¿Cuál es el precio del menú?',
+          '¿Tenéis opciones vegetarianas?',
+          '¿Hacéis eventos privados?'
+        ],
+        answers: {
+          '¿Tenéis mesa para 4 el viernes?': 'El viernes hay disponibilidad a las <strong>14:00 y a las 21:30</strong>. ¿Cuál prefieres? Para confirmar solo necesito tu nombre y un teléfono de contacto 🍽️',
+          '¿Cuál es el precio del menú?': 'El menú del día (L–V) está a <strong>€14,50</strong> con primero, segundo, postre y bebida incluida. Los fines de semana tenemos carta. ¿Quieres ver los platos de hoy?',
+          '¿Tenéis opciones vegetarianas?': '¡Sí! Siempre tenemos 2–3 opciones vegetarianas y platos veganos. También adaptamos platos con alérgenos si nos avisas al reservar. ¿Alguna restricción en concreto?',
+          '¿Hacéis eventos privados?': '¡Claro! Tenemos salón privado para hasta <strong>40 personas</strong>. Cenas de empresa, cumpleaños, comuniones... ¿Para cuántas personas y qué fecha tienes en mente? 🎉'
+        }
+      }
+    };
+
+    let currentV = 'clinica';
+    let isBotTyping = false;
+
+    function nowTime() {
+      const d = new Date();
+      return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+    }
+
+    function renderPills(v) {
+      const el = document.getElementById('vPills');
+      el.innerHTML = '';
+      V_DATA[v].questions.forEach(q => {
+        const btn = document.createElement('button');
+        btn.className = 'v-pill';
+        btn.textContent = q;
+        btn.addEventListener('click', () => handleQ(q, btn));
+        el.appendChild(btn);
+      });
+    }
+
+    function resetChat(v) {
+      currentV = v;
+      isBotTyping = false;
+      document.getElementById('vChatBody').innerHTML =
+        `<div class="v-msg bot">¡Hola! 👋 Soy el asistente virtual. ¿En qué puedo ayudarte hoy?<div class="v-msg-time">${nowTime()}</div></div>`;
+      document.getElementById('vChatName').textContent = V_DATA[v].botName;
+      renderPills(v);
+    }
+
+    function scrollBody() {
+      const b = document.getElementById('vChatBody');
+      b.scrollTop = b.scrollHeight;
+    }
+
+    function handleQ(question, pillBtn) {
+      if (isBotTyping) return;
+      isBotTyping = true;
+      document.querySelectorAll('.v-pill').forEach(p => p.disabled = true);
+      pillBtn.classList.add('used');
+
+      const body = document.getElementById('vChatBody');
+
+      // User bubble
+      const uMsg = document.createElement('div');
+      uMsg.className = 'v-msg user';
+      uMsg.innerHTML = `${question}<div class="v-msg-time">${nowTime()} ✓✓</div>`;
+      body.appendChild(uMsg);
+      scrollBody();
+
+      // Typing indicator after 400ms
+      setTimeout(() => {
+        const typing = document.createElement('div');
+        typing.className = 'v-typing';
+        typing.id = 'vTyping';
+        typing.innerHTML = '<div class="v-typing-dot"></div><div class="v-typing-dot"></div><div class="v-typing-dot"></div>';
+        body.appendChild(typing);
+        scrollBody();
+
+        // Bot answer after 1600ms
+        setTimeout(() => {
+          const t = document.getElementById('vTyping');
+          if (t) t.remove();
+          const bMsg = document.createElement('div');
+          bMsg.className = 'v-msg bot';
+          const ans = V_DATA[currentV].answers[question] || '¡Buena pregunta! Enseguida te respondo 😊';
+          bMsg.innerHTML = `${ans}<div class="v-msg-time">${nowTime()}</div>`;
+          body.appendChild(bMsg);
+          scrollBody();
+          document.querySelectorAll('.v-pill').forEach(p => {
+            if (!p.classList.contains('used')) p.disabled = false;
+          });
+          isBotTyping = false;
+        }, 1600);
+      }, 400);
+    }
+
+    // Tab clicks
+    document.getElementById('vTabs').addEventListener('click', e => {
+      const tab = e.target.closest('[data-v]');
+      if (!tab) return;
+      document.querySelectorAll('.v-tab[data-v]').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      resetChat(tab.dataset.v);
+    });
+
+    // Reset button
+    document.getElementById('vReset').addEventListener('click', () => resetChat(currentV));
+
+    // Init pills
+    renderPills('clinica');
   </script>
 </body>
 </html>
