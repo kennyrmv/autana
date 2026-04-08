@@ -1049,14 +1049,14 @@
 
           <div class="calc-field">
             <div class="calc-label-row">
-              <label class="calc-label" for="sFuera">Mensajes fuera de horario</label>
-              <span class="calc-val" id="cFuera">40%</span>
+              <label class="calc-label" for="sFuera">Mensajes sin respuesta en menos de 5 min</label>
+              <span class="calc-val" id="cFuera">65%</span>
             </div>
-            <input type="range" class="calc-slider" id="sFuera" min="10" max="70" value="40" step="5">
-            <div class="calc-range-hint"><span>10%</span><span>70%</span></div>
+            <input type="range" class="calc-slider" id="sFuera" min="20" max="95" value="65" step="5">
+            <div class="calc-range-hint"><span>20%</span><span>95%</span></div>
           </div>
 
-          <p class="calc-assumption">Estimamos que el 60% de los clientes que no obtienen respuesta inmediata no vuelven a intentarlo — benchmark conservador de PYMEs de servicios en España.</p>
+          <p class="calc-assumption">Incluye mensajes fuera de horario <em>y</em> los que llegan mientras estás con un cliente. El 56% de los usuarios abandona la compra si WhatsApp tarda en responder — <a href="https://business.whatsapp.com/blog/getting-value-from-whatsapp-messaging-marketing-edition" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.55);text-decoration:underline">WhatsApp Business, Meta</a>.</p>
         </div>
 
         <!-- Resultados -->
@@ -1512,10 +1512,10 @@
       document.getElementById('cFuera').textContent  = Math.round(fuera * 100) + '%';
 
       // Lógica
-      const msgsPerMonth         = msgs * 4.33;           // semanas/mes
-      const msgsLostPerMonth     = msgsPerMonth * fuera;  // mensajes fuera de horario
-      const clientsLost          = msgsLostPerMonth * 0.60; // 60% no vuelven a intentarlo
-      const reservasRecuperadas  = Math.round(clientsLost * 0.65); // bot convierte el 65%
+      const msgsPerMonth         = msgs * 4.33;              // semanas/mes
+      const msgsSinRespuesta     = msgsPerMonth * fuera;    // sin respuesta en <5 min (fuera de horario + ocupado)
+      const clientsLost          = msgsSinRespuesta * 0.56; // 56% abandona — WhatsApp Business, Meta
+      const reservasRecuperadas  = Math.round(clientsLost * 0.65); // bot convierte el 65% de los recuperables
       const ingresosExtra        = reservasRecuperadas * ticket;
       const horasLiberadas       = Math.round((msgsPerMonth * 2.5) / 60); // 2.5 min/mensaje manual
       const botCost              = 297; // €/mes tier estándar
